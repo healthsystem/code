@@ -1,0 +1,15 @@
+{
+    "contents" : "rm(list=ls())\nsetwd('/home/robert/workspace/Projects/health_fraud/code/R_code')\n\nlibrary(digest)\nlibrary(devtools)\nlibrary(d3Network)\nlibrary('igraph', lib.loc = '/home/robert/workspace/Projects/health_fraud/lib')\n#source_gist(\"5734624\")\n\ng <-read.graph(\"../../data/edge_col.txt\", format = \"ncol\")\n#g <-read.graph(\"../../data/san.csv\", format = \"ncol\")\n\n#print(g, g=T, v=T, e=T)\n#mydata<-read.table(\"../../data/edge_col.txt\")\n#mydata\n\ng2 = graph.neighborhood(g, 2, nodes = \"I74966\")\ng3 <-g2[[1]]\n\neb2 <- edge.betweenness.community(g3, directed = TRUE)\neb3 <-cutat(eb2,5)\n\nMisNodes <- data.frame(V(g3)$name, eb3)\ncolnames(MisNodes) <- c(\"name\", \"group\")\n\nlinks <-get.data.frame(g3, what=\"both\")\nMisLinks <-data.frame(links[2])\ncolnames(MisLinks) <- c(\"s\",\"t\",\"v\")\nSource <-match(MisLinks$s, MisNodes$name)\nTarget <-match(MisLinks$t, MisNodes$name)\nMisLinks<-data.frame(cbind(Source-1,Target-1,MisLinks$v))\ncolnames(MisLinks) <- c(\"source\", \"target\",\"value\")\n\n\n\n###################################testing ############################\n# library(RCurl)\n# \n# # Gather raw JSON formatted data\n# URL <- \"https://raw.github.com/christophergandrud/d3Network/master/JSONdata/miserables.json\"\n# MisJson <- getURL(URL, ssl.verifypeer = FALSE)\n# \n# # Convert JSON arrays into data frames\n# MisLinks <- JSONtoDF(jsonStr = MisJson, array = \"links\")\n# MisNodes <- JSONtoDF(jsonStr = MisJson, array = \"nodes\")\n###################################testing ############################\n\nd3ForceNetwork(Links = MisLinks, Nodes = MisNodes, \n               Source = \"source\", Target = \"target\", \n               Value = \"value\", NodeID = \"name\", \n               Group = \"group\", width = 900, height = 900, opacity = 0.9,\n               file = \"../../data/ClusteringGraph_example.html\")\n\n\nx<-eb\nplot(x,g3,\n     colbar=rainbow(length(x)),\n     col=colbar[membership(x)],\n     mark.groups=communities(x),\n     edge.color=c(\"black\", \"red\")[crossing(x,g3)+1])\n\ny <-get.data.frame(g, what=\"both\")\nSource<- y$edges$from\nTarget<- y$edges$to\n\nNetworkData <- data.frame(Source, Target)\nd3SimpleNetwork(NetworkData, width = 1000, height = 1000,file= \"../../data/test.html\")\n\n\n# source_gist(\"5734624\")\n# Source <- c(\"A\", \"A\", \"A\", \"A\", \"B\", \"B\", \"C\", \"C\", \"D\")\n# Target <- c(\"B\", \"C\", \"D\", \"J\", \"E\", \"F\", \"G\", \"H\", \"I\")\n# NetworkData <- data.frame(Source, Target)\n# d3SimpleNetwork(NetworkData, width = 1000, height = 1000,file= \"../../data/test.html\")\n\n",
+    "created" : 1378248589121.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1452567928",
+    "id" : "57D020A8",
+    "lastKnownWriteTime" : 1378924006,
+    "path" : "~/workspace/Projects/health_fraud/code/R_code/visulization.r",
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}

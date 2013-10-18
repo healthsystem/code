@@ -1,0 +1,13 @@
+The codes in this folder are used to doing graph analysis for the health care graph.
+* centralities.r is used to generate different centralities in the graph.
+* clustering.r is used to do the graph clustering for the patient-patient graph.
+* graph_features.r is used to create graph features. 
+* graph_group_features. r is used to create a group of graph features, based on the second neighborhood.
+* outlier_draft.r is doing outlier detection, the code is just try out.
+* outlier_family_practioner.r is doing outlier detection with the family practitioner (08 referral)---performing practitioner network.
+* provider_features.r is used to create the provider features from the original referal_performing network.
+* referral_performing.r is similar to create_referal_performing_features.r
+* visulization. r is used to create the D3 visulization html
+* temp.r and temp_analysis.r are just temp files.
+* create_referral_performing_features.r is used to create referral_performing network features.
+* create_referral_performing_features_small.r is used to create smaller size referral performing network features
